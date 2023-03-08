@@ -1,7 +1,8 @@
 import { defaultCorsemaxAllocation, defaultPreferences } from '@data/defaults';
 import { Result } from '@type/result';
 import Papa from 'papaparse';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { GrPowerReset } from 'react-icons/gr';
 
 const commonConfig = {
   header: true,
@@ -10,11 +11,34 @@ const commonConfig = {
 };
 
 export default function Home() {
-  const [preferences, setPreferences] = useState<string>(defaultPreferences);
-  const [coursesmaxAllocation, setcoursesmaxAllocation] = useState<string>(
-    defaultCorsemaxAllocation
-  );
+  const [preferences, setPreferences] = useState<string>('');
+  const [coursesMaxAllocation, setCoursesMaxAllocation] = useState<string>('');
   const [result, setResult] = useState<Result>();
+
+  useEffect(() => {
+    // Save preferences to localStorage
+    if (preferences) localStorage.setItem('preferences', preferences);
+  }, [preferences]);
+
+  useEffect(() => {
+    // Save coursesMaxAllocation to localStorage
+    if (coursesMaxAllocation)
+      localStorage.setItem('coursesMaxAllocation', coursesMaxAllocation);
+  }, [coursesMaxAllocation]);
+
+  useEffect(() => {
+    // Load preferences and coursesMaxAllocation from localStorage
+    const preferencesTmp = localStorage.getItem('preferences');
+    if (preferencesTmp) setPreferences(preferencesTmp);
+    else setPreferences(defaultPreferences);
+
+    const coursesMaxAllocationTmp = localStorage.getItem(
+      'coursesMaxAllocation'
+    );
+    if (coursesMaxAllocationTmp)
+      setCoursesMaxAllocation(coursesMaxAllocationTmp);
+    else setCoursesMaxAllocation(defaultCorsemaxAllocation);
+  }, []);
 
   const handleSubmit = () => {
     let preferencesJson = Papa.parse(preferences, commonConfig).data as any; // TODO: fix type
@@ -25,12 +49,12 @@ export default function Home() {
       return acc;
     }, {});
 
-    let coursesmaxAllocationJson = Papa.parse(
-      coursesmaxAllocation,
+    let coursesMaxAllocationJson = Papa.parse(
+      coursesMaxAllocation,
       commonConfig
     ).data as any; // TODO: fix type
     // Create an object with the course as key and the max allocation as value
-    coursesmaxAllocationJson = coursesmaxAllocationJson.reduce(
+    coursesMaxAllocationJson = coursesMaxAllocationJson.reduce(
       (acc: any, curr: any) => {
         const { course, max } = curr;
         acc[course] = max;
@@ -46,7 +70,7 @@ export default function Home() {
       },
       body: JSON.stringify({
         preferences: preferencesJson,
-        courses_max_allocation: coursesmaxAllocationJson,
+        courses_max_allocation: coursesMaxAllocationJson,
       }),
     })
       .then((response) => response.json())
@@ -71,12 +95,27 @@ export default function Home() {
       });
   };
 
+  const handleReset = () => {
+    setPreferences(defaultPreferences);
+    setCoursesMaxAllocation(defaultCorsemaxAllocation);
+    setResult(undefined);
+  };
+
   return (
     <>
       <div className="flex min-h-screen flex-col gap-8 py-12 px-4 lg:px-8">
-        <h1 className="mb-4 text-center text-4xl">
+        <h1 className="text-center align-middle text-4xl">
           Preference-based course allocation
         </h1>
+        <div className="flex flex-row items-center justify-center">
+          <button
+            className="flex w-16 flex-row items-center justify-center gap-1"
+            onClick={handleReset}
+          >
+            <GrPowerReset />
+            Reset
+          </button>
+        </div>
         <div className="grid grid-flow-row grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="rounded-lg bg-blue-100 py-8 px-4 lg:px-8">
             <h2 className="mb-4 text-2xl">
@@ -92,8 +131,8 @@ export default function Home() {
             <h2 className="mb-4 text-2xl">Courses max allocation</h2>
             <textarea
               className="h-96 w-full rounded-lg p-4"
-              value={coursesmaxAllocation}
-              onChange={(e) => setcoursesmaxAllocation(e.target.value)}
+              value={coursesMaxAllocation}
+              onChange={(e) => setCoursesMaxAllocation(e.target.value)}
             />
           </div>
         </div>
