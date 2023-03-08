@@ -1,4 +1,4 @@
-import { defaultCorsemaxAllocation, defaultPreferences } from '@data/default';
+import { defaultCorsemaxAllocation, defaultPreferences } from '@data/defaults';
 import { Result } from '@type/result';
 import Papa from 'papaparse';
 import { useState } from 'react';
