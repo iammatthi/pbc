@@ -104,7 +104,7 @@ export default function Home() {
   return (
     <>
       <div className="flex min-h-screen flex-col gap-8 py-12 px-4 lg:px-8">
-        <h1 className="text-center align-middle text-4xl">
+        <h1 className="text-center text-3xl lg:text-4xl">
           Preference-based course allocation
         </h1>
         <div className="flex flex-row items-center justify-center">
