@@ -39,10 +39,18 @@ The API should now be accessible at http://localhost:8000.
 
 ### Frontend
 
-Install the frontend dependencies:
+Create a `.env` file by copying the `.env.example` file in the frontend directory:
 
 ```bash
 cd frontend
+cp .env.example .env
+```
+
+Update the values in the .env file with your own settings.
+
+Install the frontend dependencies:
+
+```bash
 yarn
 ```
 
@@ -56,7 +64,7 @@ The web application should now be accessible at http://localhost:3000.
 
 ## Features
 
-- [x] Submit a list of students with their preferences.
+- [x] Submit a list of students with their preferences (lower number indicates higher preference).
 - [x] Submit a list of courses with max allocation.
 - [ ] Students can indicate if they want to stay in the same course.
 - [ ] Provide an option for users to enforce that the number of students assigned to each course is a multiple of a given number (e.g. even number).
