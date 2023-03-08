@@ -4,7 +4,7 @@ This is a web application that allows students to submit their course preference
 
 The application allows users to submit a list of students along with their course preferences, and a list of courses with the maximum number of students that can be enrolled in each course. The application then uses an algorithm to allocate courses to students based on their preferences and the availability of seats in the courses.
 
-The algorithm used for allocation is designed to maximize the number of students who are allocated their preferred courses while also ensuring that the maximum capacity of each course is not exceeded. The algorithm is written
+The linear programming algorithm used for allocation is designed to maximize the number of students who are allocated their preferred courses while also ensuring that the maximum capacity of each course is not exceeded.
 
 ## Getting Started
 
