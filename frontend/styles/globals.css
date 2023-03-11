@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 * {
-  @apply scrollbar-thin scrollbar-track-blue-100 scrollbar-thumb-blue-300;
+  @apply scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300;
 }
