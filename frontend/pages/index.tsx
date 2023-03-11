@@ -5,7 +5,7 @@ import { defaultCorsemaxAllocation, defaultPreferences } from '@data/defaults';
 import { Result } from '@type/result';
 import Papa from 'papaparse';
 import { useEffect, useState } from 'react';
-import { GrPowerReset } from 'react-icons/gr';
+import { GrCpu, GrPowerReset } from 'react-icons/gr';
 
 const commonConfig = {
   header: true,
@@ -141,10 +141,10 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <button
-            className="w-full rounded-lg bg-gray-100 px-8 py-4 text-2xl"
+            className="flex w-full flex-row items-center justify-center gap-2 rounded-lg bg-gray-100 px-8 py-4 text-2xl"
             onClick={handleSubmit}
           >
-            ˅˅ Compute result ˅˅
+            <GrCpu /> Compute result
           </button>
         </div>
         <Card title="Result">
